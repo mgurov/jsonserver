@@ -1,4 +1,4 @@
-package com.example.jsonserver.api.embedded;
+package com.example.jsonserver.api.javavars;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 

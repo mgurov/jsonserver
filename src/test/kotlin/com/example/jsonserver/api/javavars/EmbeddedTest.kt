@@ -1,4 +1,4 @@
-package com.example.jsonserver.api.embedded
+package com.example.jsonserver.api.javavars
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat

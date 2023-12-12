@@ -42,6 +42,22 @@ class EmbeddedTest {
         assertThat(actual).isEqualTo("""{"details":"gory","title":"title","description":"desc"}""")
     }
 
+    @Test
+    fun `should deserialize holder`() {
+
+        val actual = objectMapper.readValue("""{"details":"gory","title":"title","description":"desc"}""", Holder::class.java)
+
+        val expected = Holder().apply {
+            base = Base().apply {
+                title = "title"
+                description = "desc"
+            }
+            details = "gory"
+        }
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
     // ser with null :thinkingface:
 
 

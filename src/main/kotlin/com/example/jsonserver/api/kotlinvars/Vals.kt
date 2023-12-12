@@ -9,7 +9,8 @@ data class Base(
 
 data class Holder(
     var details: String,
+) {
     @JsonUnwrapped
-    var base: Base,
-)
+    var base: Base? = null
+}
 //TODO: move base out of the constructor

@@ -9,7 +9,7 @@ data class Base(
 
 data class Holder(
     val details: String,
-    @JsonUnwrapped
+    @field:JsonUnwrapped
     val base: Base,
 )
 //TODO: move base out of the constructor

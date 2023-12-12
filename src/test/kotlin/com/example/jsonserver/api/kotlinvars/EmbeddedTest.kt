@@ -30,12 +30,13 @@ class EmbeddedTest {
     @Test
     fun `should serialize holder`() {
         val value = Holder(
+            details = "gory",
+        ).apply {
             base = Base(
                 title = "title",
                 description = "desc",
-            ),
-            details = "gory",
-        )
+            )
+        }
 
         val actual = objectMapper.writeValueAsString(value)
 
@@ -48,12 +49,13 @@ class EmbeddedTest {
         val actual = objectMapper.readValue("""{"details":"gory","title":"title","description":"desc"}""", Holder::class.java)
 
         val expected = Holder(
+            details = "gory",
+        ).apply {
             base = Base(
                 title = "title",
                 description = "desc",
-            ),
-            details = "gory",
-        )
+            )
+        }
 
         assertThat(actual).isEqualTo(expected)
     }

@@ -17,5 +17,15 @@ class EmbeddedTest {
         assertThat(actual).isEqualTo("""{"title":"title","description":"desc"}""")
     }
 
-    val objectMapper = ObjectMapper()
+    @Test
+    fun `should deserialize`() {
+        val actual:Base = objectMapper.readValue("""{"title":"title","description":"desc"}""", Base::class.java)
+
+        assertThat(actual).isEqualTo(Base().apply {
+            title = "title"
+            description = "desc"
+        })
+    }
+
+    private val objectMapper = ObjectMapper()
 }

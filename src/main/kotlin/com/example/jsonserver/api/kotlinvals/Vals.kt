@@ -12,3 +12,4 @@ data class Holder(
     @JsonUnwrapped
     val base: Base,
 )
+//TODO: move base out of the constructor

@@ -17,13 +17,23 @@ class DataAPITest(
     @Test
     fun `should be able to call thyself`() {
         val response = restTemplate.getForEntity(
-            "/api/data/15", String::class.java
+            "/api/data/3?pageSize=2",DataAPI.Response::class.java
         )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
+        assertThat(response.body?.data).containsExactly("1", "2")
+        assertThat(response.body?.pageSize).isEqualTo(2)
+        assertThat(response.body?.nextPage).isNotNull()
 
-        assertThat(response.body).isEqualTo("blah")
+        val url = "/api/data/3?pageSize=2&nextPage=${response.body?.nextPage}"
+        val response2 = restTemplate.getForEntity(
+            url,DataAPI.Response::class.java
+        )
 
+        assertThat(response2.statusCode).isEqualTo(HttpStatus.OK)
+        assertThat(response2.body?.data).containsExactly("3")
+        assertThat(response2.body?.pageSize).isEqualTo(2)
+        assertThat(response2.body?.nextPage).isNull()
     }
 
 }

@@ -18,9 +18,18 @@ class DataAPI {
         nextPage: String?,
     ) : Response {
 
-        val data = (1..size).map { it.toString() }
+        val data: List<String> = (1..size).map { it.toString() }
 
-        return Response(data, nextPage = null, pageSize = pageSize)
+        val startingFrom = nextPage?.toInt() ?: 0
+        val dataToStartFrom = data.drop(startingFrom)
+        val dataPage = dataToStartFrom.take(pageSize)
+        val nextNextPage = if (dataToStartFrom.size == dataPage.size) {
+            null //consumed the reminder
+        } else {
+            (startingFrom + dataPage.size).toString()
+        }
+
+        return Response(dataPage, nextPage = nextNextPage, pageSize = pageSize)
 
     }
 

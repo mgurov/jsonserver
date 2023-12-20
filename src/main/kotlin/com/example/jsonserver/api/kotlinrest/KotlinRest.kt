@@ -3,6 +3,7 @@ package com.example.jsonserver.api.kotlinrest
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonUnwrapped
 import java.time.Instant
+import java.util.UUID
 
 data class MutableProps(
     val name: String,
@@ -39,11 +40,13 @@ data class UpdateOnlyProps(
 
 
 data class ReadOnlyProps(
+    val id: String,
     val createdOn: Instant,
     val updatedOn: Instant,
 ) {
     companion object {
         val example = ReadOnlyProps(
+            id = UUID.randomUUID().toString(),
             createdOn = Instant.now().minusSeconds(1000000L),
             updatedOn = Instant.now(),
         )

@@ -8,12 +8,14 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.Instant
+import java.util.UUID
 
 
 class UltimateKotlinSerializationSolution {
 
     @Test
     fun `should serialize read representation`() {
+
         val given = ReadSchema().apply {
             mutableProps = MutableProps(
                 name = "naam",
@@ -26,6 +28,7 @@ class UltimateKotlinSerializationSolution {
                 updatedBy = "me@here"
             )
             readOnlyProps = ReadOnlyProps(
+                id = "a random id",
                 createdOn = Instant.parse("2020-01-01T00:00:00Z"),
                 updatedOn = Instant.parse("2021-11-11T11:11:11Z"),
             )
@@ -36,6 +39,7 @@ class UltimateKotlinSerializationSolution {
         actual.assertIsJson(
             """
                 {
+                "id":"a random id",
                 "name":"naam",
                 "description":"опис",
                 "createdBy":"them@there",

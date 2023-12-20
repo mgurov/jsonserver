@@ -13,21 +13,22 @@ class UltimateKotlinSerializationSolution {
 
     @Test
     fun `should serialize base`() {
-        val given = ReadSchema()
-        given.mutableProps = MutableProps(
-            name = "naam",
-            description = "опис"
-        )
-        given.createableProps = CreateOnlyProps(
-            createdBy = "them@there"
-        )
-        given.updateableProps = UpdateOnlyProps(
-            updatedBy = "me@here"
-        )
-        given.readOnlyProps = ReadOnlyProps(
-            createdOn = Instant.parse("2020-01-01T00:00:00Z"),
-            updatedOn = Instant.parse("2021-11-11T11:11:11Z"),
-        )
+        val given = ReadSchema().apply {
+            mutableProps = MutableProps(
+                name = "naam",
+                description = "опис"
+            )
+            createableProps = CreateOnlyProps(
+                createdBy = "them@there"
+            )
+            updateableProps = UpdateOnlyProps(
+                updatedBy = "me@here"
+            )
+            readOnlyProps = ReadOnlyProps(
+                createdOn = Instant.parse("2020-01-01T00:00:00Z"),
+                updatedOn = Instant.parse("2021-11-11T11:11:11Z"),
+            )
+        }
 
         val actual = objectMapper.writeValueAsString(given)
 

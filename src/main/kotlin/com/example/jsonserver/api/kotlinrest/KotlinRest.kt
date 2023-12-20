@@ -61,25 +61,32 @@ data class CreateRepresentation(
     val mutableProps: MutableProps,
 ) {
     @JsonCreator
-    constructor(): this(
+    private constructor(): this(
         creationProps = CreateOnlyProps.example,
         mutableProps = MutableProps.example,
     )
 }
 
-//TODO: representations
-class ReadRepresentation {
+data class ReadRepresentation(
     @field:JsonUnwrapped
-    var mutableProps = MutableProps.example
+    val mutableProps: MutableProps = MutableProps.example,
 
     @field:JsonUnwrapped
-    var createableProps = CreateOnlyProps.example
+    val createableProps: CreateOnlyProps = CreateOnlyProps.example,
 
     @field:JsonUnwrapped
-    var updateableProps = UpdateOnlyProps.example
+    val updateableProps: UpdateOnlyProps = UpdateOnlyProps.example,
 
     @field:JsonUnwrapped
-    var readOnlyProps = ReadOnlyProps.example
+    val readOnlyProps: ReadOnlyProps = ReadOnlyProps.example,
+) {
+    @JsonCreator
+    private constructor(): this(
+        mutableProps = MutableProps.example,
+        createableProps = CreateOnlyProps.example,
+        updateableProps = UpdateOnlyProps.example,
+        readOnlyProps = ReadOnlyProps.example,
+    )
 }
 
 //TODO: to data class

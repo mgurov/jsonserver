@@ -8,7 +8,6 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.Instant
-import java.util.UUID
 
 
 class UltimateKotlinSerializationSolution {
@@ -16,7 +15,7 @@ class UltimateKotlinSerializationSolution {
     @Test
     fun `should serialize read representation`() {
 
-        val given = ReadSchema().apply {
+        val given = ReadRepresentation().apply {
             mutableProps = MutableProps(
                 name = "naam",
                 description = "опис"
@@ -63,10 +62,10 @@ class UltimateKotlinSerializationSolution {
             "updatedOn":"2021-11-11T11:11:11Z"
             }""".trimIndent()
 
-        val actual: CreateSchema = objectMapper.readValue(givenJson)
+        val actual: CreateRepresentation = objectMapper.readValue(givenJson)
 
         assertThat(actual).isEqualTo(
-            CreateSchema(
+            CreateRepresentation(
                 creationProps = CreateOnlyProps(
                     createdBy = "them@there",
                 ),

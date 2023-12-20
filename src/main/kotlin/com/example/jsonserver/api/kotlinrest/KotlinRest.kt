@@ -7,7 +7,7 @@ import java.util.UUID
 
 data class MutableProps(
     val name: String,
-    val description: String,
+    val description: String?,
 ) {
     companion object {
         val example = MutableProps(
@@ -53,7 +53,7 @@ data class ReadOnlyProps(
     }
 }
 
-data class CreateSchema(
+data class CreateRepresentation(
     @field:JsonUnwrapped
     val creationProps: CreateOnlyProps,
 
@@ -68,8 +68,7 @@ data class CreateSchema(
 }
 
 //TODO: representations
-
-class ReadSchema {
+class ReadRepresentation {
     @field:JsonUnwrapped
     var mutableProps = MutableProps.example
 
@@ -83,7 +82,8 @@ class ReadSchema {
     var readOnlyProps = ReadOnlyProps.example
 }
 
-class UpdateSchema {
+//TODO: to data class
+class UpdateRepresentation {
     @field:JsonUnwrapped
     var mutableProps = MutableProps.example
 

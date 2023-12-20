@@ -1,26 +1,30 @@
 package com.example.jsonserver.api.kotlinrest
 
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class KotlinRestApi{
 
-    val data = mutableListOf<ReadSchema>()
+    val data = mutableListOf<ReadRepresentation>()
 
     @PostMapping("/api/kotlin-rest/")
     fun create(
-        @RequestBody creationRequest: CreateSchema
+        @RequestBody creationRequest: CreateRepresentation
     ) {
         TODO()
     }
 
-    @PostMapping("/api/kotlin-rest/{id}")
+    @GetMapping("/api/kotlin-rest/{id}")
     fun create(
         @PathVariable id: String,
-    ): ReadSchema {
+    ): ReadRepresentation {
+        TODO()
+    }
+
+    @PatchMapping("/api/kotlin-rest/{id}")
+    fun update(
+        @PathVariable id: String,
+    ): ReadRepresentation {
         TODO()
     }
 

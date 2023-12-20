@@ -89,11 +89,15 @@ data class ReadRepresentation(
     )
 }
 
-//TODO: to data class
-class UpdateRepresentation {
+data class UpdateRepresentation(
     @field:JsonUnwrapped
-    var mutableProps = MutableProps.example
-
+    val mutableProps: MutableProps,
     @field:JsonUnwrapped
-    var updateableProps = UpdateOnlyProps.example
+    val updateableProps: UpdateOnlyProps,
+) {
+    @JsonCreator
+    private constructor(): this(
+        mutableProps = MutableProps.example,
+        updateableProps = UpdateOnlyProps.example,
+    )
 }

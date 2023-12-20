@@ -67,6 +67,8 @@ data class CreateSchema(
     )
 }
 
+//TODO: representations
+
 class ReadSchema {
     @field:JsonUnwrapped
     var mutableProps = MutableProps.example

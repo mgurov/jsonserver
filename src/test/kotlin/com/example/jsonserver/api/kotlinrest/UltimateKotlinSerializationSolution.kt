@@ -29,7 +29,6 @@ class UltimateKotlinSerializationSolution {
             updatedOn = Instant.parse("2021-11-11T11:11:11Z"),
         )
 
-
         val actual = objectMapper.writeValueAsString(given)
 
         //language=JSON

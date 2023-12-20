@@ -62,15 +62,15 @@ class UltimateKotlinSerializationSolution {
         val actual: CreateSchema = objectMapper.readValue(givenJson)
 
         assertThat(actual).isEqualTo(
-            CreateSchema().apply {
-                this.creationProps = CreateOnlyProps(
+            CreateSchema(
+                creationProps = CreateOnlyProps(
                     createdBy = "them@there",
-                )
-                this.mutableProps = MutableProps(
+                ),
+                mutableProps = MutableProps(
                     name = "naam",
                     description = "опис",
                 )
-            }
+            )
         )
 
     }

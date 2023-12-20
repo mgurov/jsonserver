@@ -1,5 +1,6 @@
 package com.example.jsonserver.api.kotlinrest
 
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonUnwrapped
 import java.time.Instant
 
@@ -49,36 +50,18 @@ data class ReadOnlyProps(
     }
 }
 
-class CreateSchema {
+data class CreateSchema(
     @field:JsonUnwrapped
-    var creationProps =  CreateOnlyProps.example
+    val creationProps: CreateOnlyProps,
 
     @field:JsonUnwrapped
-    var mutableProps = MutableProps.example
-
-    override fun toString(): String {
-        return "CreateSchema(creationProps=$creationProps, mutableProps=$mutableProps)"
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as CreateSchema
-
-        if (creationProps != other.creationProps) return false
-        if (mutableProps != other.mutableProps) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = creationProps.hashCode()
-        result = 31 * result + mutableProps.hashCode()
-        return result
-    }
-
-
+    val mutableProps: MutableProps,
+) {
+    @JsonCreator
+    constructor(): this(
+        creationProps = CreateOnlyProps.example,
+        mutableProps = MutableProps.example,
+    )
 }
 
 class ReadSchema {

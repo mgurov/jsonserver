@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.util.concurrent.TimeUnit
 
 @RestController
 class DataAPI {
@@ -16,6 +17,8 @@ class DataAPI {
         pageSize: Int,
         @RequestParam(required = false)
         nextPage: String?,
+        @RequestParam(required = false, defaultValue = "10")
+        delay: Long,
     ) : Response {
 
         val data: List<String> = (1..size).map { it.toString() }
@@ -28,6 +31,8 @@ class DataAPI {
         } else {
             (startingFrom + dataPage.size).toString()
         }
+
+        TimeUnit.SECONDS.sleep(delay)
 
         return Response(dataPage, nextPage = nextNextPage, pageSize = pageSize)
 

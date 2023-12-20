@@ -68,7 +68,7 @@ class UltimateKotlinSerializationSolution {
                 )
                 this.mutableProps = MutableProps(
                     name = "naam",
-                    description = "опис"
+                    description = "опис",
                 )
             }
         )

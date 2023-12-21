@@ -1,7 +1,6 @@
 package com.example.jsonserver.api.kotlinrest
 
-import net.bytebuddy.asm.MemberSubstitution.Substitution.Chain.Step.ForField.Read
-import org.assertj.core.api.Assertions
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,6 +14,48 @@ class KotlinRestApiTest(
     @Autowired
     private val restTemplate: TestRestTemplate
 ) {
+
+    @Test
+    fun `should be able to create an entity`() {
+        val request = CreateRepresentation(
+            creationProps = CreateOnlyProps(
+                createdBy = "test"
+            ),
+            mutableProps = MutableProps(
+                name = "testing",
+                description = null
+            )
+        )
+        val created = restTemplate.postForEntity(
+            "/api/kotlin-rest/",
+            request,
+            ReadRepresentation::class.java
+        ).okBody()
+
+        assertThat(created.updateableProps.updatedBy).isEqualTo("test")
+    }
+
+    fun `simple name update`() {
+        val created = givenEntityCreated(name = "initial", description = "fooe")
+
+        assertThat(created.mutableProps).isEqualTo(MutableProps(
+            name = "initial",
+            description = "fooe"
+        ))
+
+        val updated = whenUpdated(created, """
+            {"name" = "updated"}
+        """)
+
+
+    }
+
+    private fun whenUpdated(created: ReadRepresentation, updateJson: String): ReadRepresentation {
+        val jsonNode = objectMapper.readTree(updateJson)
+        return restTemplate.patchForObject("/api/kotlin-rest/{id}", jsonNode, ReadRepresentation::class.java, created.readOnlyProps.id)
+    }
+
+    val objectMapper = jacksonObjectMapper()
 
     fun givenEntityCreated(
         name: String = "testing",
@@ -37,25 +78,6 @@ class KotlinRestApiTest(
         ).okBody()
     }
 
-    @Test
-    fun `should be able to create an entity`() {
-        val request = CreateRepresentation(
-            creationProps = CreateOnlyProps(
-                createdBy = "test"
-            ),
-            mutableProps = MutableProps(
-                name = "testing",
-                description = null
-            )
-        )
-        val created = restTemplate.postForEntity(
-            "/api/kotlin-rest/",
-            request,
-            ReadRepresentation::class.java
-        ).okBody()
-
-        assertThat(created.updateableProps.updatedBy).isEqualTo("test")
-    }
 
     fun <T> ResponseEntity<T>.okBody(): T {
         assertThat(this.statusCode).isEqualTo(HttpStatus.OK)

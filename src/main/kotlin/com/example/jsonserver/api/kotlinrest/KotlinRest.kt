@@ -9,6 +9,7 @@ import java.util.*
 // TODO: test schema
 // TODO: rename CU representations to commands
 // TODO: nest?
+// TODO: check whether could also model with the interfaces?
 
 @Schema(description = "Boom!")
 data class MutableProps(
@@ -76,6 +77,7 @@ data class CreateRepresentation(
     )
 }
 
+// TODO: confusing updateable v mutable
 data class ReadRepresentation(
     @field:JsonUnwrapped
     val mutableProps: MutableProps = MutableProps.example,

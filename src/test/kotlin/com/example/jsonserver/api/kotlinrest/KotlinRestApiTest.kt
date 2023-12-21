@@ -35,19 +35,25 @@ class KotlinRestApiTest(
         assertThat(created.updateableProps.updatedBy).isEqualTo("test")
     }
 
+    @Test
     fun `simple name update`() {
-        val created = givenEntityCreated(name = "initial", description = "fooe")
+        val created = givenEntityCreated(name = "initial", description = "initial")
 
         assertThat(created.mutableProps).isEqualTo(MutableProps(
             name = "initial",
-            description = "fooe"
+            description = "initial"
         ))
 
         val updated = whenUpdated(created, """
-            {"name" = "updated"}
+            {"name": "updated"}
         """)
 
-
+        assertThat(updated.updateableProps).isEqualTo(
+            MutableProps(
+                name = "initial",
+                description = "initial"
+            )
+        )
     }
 
     private fun whenUpdated(created: ReadRepresentation, updateJson: String): ReadRepresentation {

@@ -75,6 +75,36 @@ class UltimateKotlinSerializationSolution {
                 )
             )
         )
+    }
+
+    @Test
+    fun `should update for read update representation`() {
+
+        val given = UpdateRepresentation(
+            mutableProps = MutableProps(
+                name = "given name",
+                description = "given description",
+            ),
+            updateableProps = UpdateOnlyProps(
+                updatedBy = "test"
+            )
+        )
+
+        //language=JSON
+        val givenUpdateJson = """
+            {
+            "name":"naam"
+            }""".trimIndent()
+
+        val reader = objectMapper.readerForUpdating(given)
+        val actual: UpdateRepresentation = reader.readValue(givenUpdateJson)
+
+        assertThat(actual.mutableProps).isEqualTo(
+            MutableProps(
+                name = "naam",
+                description = "given description",
+            )
+        )
 
     }
 

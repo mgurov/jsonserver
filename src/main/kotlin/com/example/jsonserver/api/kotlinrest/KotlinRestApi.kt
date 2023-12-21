@@ -1,15 +1,18 @@
 package com.example.jsonserver.api.kotlinrest
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.web.bind.annotation.*
 import java.time.Instant
 import java.util.UUID
 
 @RestController
-class KotlinRestApi{
+class KotlinRestApi(
+    private val objectMapper: ObjectMapper
+){
 
     //TODO: domain object
-    val data = mutableListOf<ReadRepresentation>()
+    val data = mutableMapOf<String, ReadRepresentation>()
 
     @PostMapping("/api/kotlin-rest/")
     fun create(
@@ -25,7 +28,7 @@ class KotlinRestApi{
                 updatedOn = Instant.now(),
             )
         )
-        data += newEntry
+        data[newEntry.readOnlyProps.id] = newEntry
         return newEntry
     }
 
@@ -40,9 +43,23 @@ class KotlinRestApi{
     fun update(
         @PathVariable id: String,
         @Schema(implementation = UpdateRepresentation::class)
-        @RequestBody patchJson: String,
+        @RequestBody patchJson: String, //TODO: consider the full class?
     ): ReadRepresentation {
-        TODO()
+
+        val entry = data[id] ?: throw RuntimeException("Not found") //TODO: 404
+        val updateThings = UpdateRepresentation(
+            mutableProps = entry.mutableProps,
+            updateableProps = entry.updateableProps,
+        )
+
+        val readerForUpdating = objectMapper.readerForUpdating(updateThings)
+        val patched: UpdateRepresentation = readerForUpdating.readValue(patchJson)
+        val patchedEntry = entry.copy(
+            mutableProps = patched.mutableProps,
+            updateableProps = patched.updateableProps,
+        )
+        data[id] = patchedEntry
+        return patchedEntry
     }
 
 

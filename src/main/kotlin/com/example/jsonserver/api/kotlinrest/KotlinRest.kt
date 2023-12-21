@@ -6,6 +6,10 @@ import io.swagger.v3.oas.annotations.media.Schema
 import java.time.Instant
 import java.util.*
 
+// TODO: test schema
+// TODO: rename CU representations to commands
+// TODO: nest?
+
 @Schema(description = "Boom!")
 data class MutableProps(
     val name: String,
@@ -97,6 +101,7 @@ data class ReadRepresentation(
 @Schema(
     description = "All fields are optional for update, all of them - even those marked by a `*`"
 )
+// TODO: requiredMode = Schema.RequiredMode.NOT_REQUIRED ?
 data class UpdateRepresentation(
     @field:JsonUnwrapped
     val mutableProps: MutableProps,

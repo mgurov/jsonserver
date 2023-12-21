@@ -1,6 +1,7 @@
 package com.example.jsonserver.api.kotlinrest
 
 import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonUnwrapped
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.Instant
@@ -10,6 +11,8 @@ import java.util.*
 // TODO: rename CU representations to commands
 // TODO: nest?
 // TODO: check whether could also model with the interfaces?
+// TODO: check the nested objects
+// TODO: check flatter and or java objects with the unknow props and such
 
 @Schema(description = "Boom!")
 data class MutableProps(
@@ -35,6 +38,7 @@ data class CreateOnlyProps(
     }
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class UpdateOnlyProps(
     val updatedBy: String,
 ) {

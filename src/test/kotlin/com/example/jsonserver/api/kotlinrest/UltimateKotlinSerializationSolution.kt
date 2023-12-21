@@ -109,7 +109,7 @@ class UltimateKotlinSerializationSolution {
     }
 
     @Test
-    fun `should update for read update fields`() {
+    fun `should update for mutable fields directly`() {
 
         val given = UpdateRepresentation(
             mutableProps = MutableProps(
@@ -135,6 +135,33 @@ class UltimateKotlinSerializationSolution {
                 name = "naam",
                 description = "given description",
             )
+        )
+    }
+
+    @Test
+    fun `should ignore unrelated update for update fields directly`() {
+
+        val given = UpdateRepresentation(
+            mutableProps = MutableProps(
+                name = "given name",
+                description = "given description",
+            ),
+            updateableProps = UpdateOnlyProps(
+                updatedBy = "test"
+            )
+        )
+
+        //language=JSON
+        val givenUpdateJson = """
+            {
+            "name":"naam"
+            }""".trimIndent()
+
+        val reader = objectMapper.readerForUpdating(given.updateableProps)
+        val actual: UpdateOnlyProps = reader.readValue(givenUpdateJson)
+
+        assertThat(actual).isEqualTo(
+            given.updateableProps
         )
     }
 

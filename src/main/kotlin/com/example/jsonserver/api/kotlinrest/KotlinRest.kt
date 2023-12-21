@@ -2,9 +2,11 @@ package com.example.jsonserver.api.kotlinrest
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonUnwrapped
+import io.swagger.v3.oas.annotations.media.Schema
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
+@Schema(description = "Boom!")
 data class MutableProps(
     val name: String,
     val description: String?,
@@ -53,6 +55,9 @@ data class ReadOnlyProps(
     }
 }
 
+@Schema(
+    description = "`NOTE!` Either `a` or `b` must be provided!",
+)
 data class CreateRepresentation(
     @field:JsonUnwrapped
     val creationProps: CreateOnlyProps,

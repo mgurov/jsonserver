@@ -94,6 +94,9 @@ data class ReadRepresentation(
     )
 }
 
+@Schema(
+    description = "All fields are optional for update, all of them - even those marked by a `*`"
+)
 data class UpdateRepresentation(
     @field:JsonUnwrapped
     val mutableProps: MutableProps,

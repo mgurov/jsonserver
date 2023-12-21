@@ -1,5 +1,6 @@
 package com.example.jsonserver.api.kotlinrest
 
+import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.web.bind.annotation.*
 import java.time.Instant
 import java.util.UUID
@@ -38,6 +39,8 @@ class KotlinRestApi{
     @PatchMapping("/api/kotlin-rest/{id}")
     fun update(
         @PathVariable id: String,
+        @Schema(implementation = UpdateRepresentation::class)
+        @RequestBody patchJson: String,
     ): ReadRepresentation {
         TODO()
     }

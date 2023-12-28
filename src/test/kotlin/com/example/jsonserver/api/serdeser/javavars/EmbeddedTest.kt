@@ -1,5 +1,7 @@
-package com.example.jsonserver.api.javavars
+package com.example.jsonserver.api.serdeser.javavars
 
+import com.example.jsonserver.serdeser.javavars.Base
+import com.example.jsonserver.serdeser.javavars.Holder
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -19,7 +21,7 @@ class EmbeddedTest {
 
     @Test
     fun `should deserialize base`() {
-        val actual:Base = objectMapper.readValue("""{"title":"title","description":"desc"}""", Base::class.java)
+        val actual: Base = objectMapper.readValue("""{"title":"title","description":"desc"}""", Base::class.java)
 
         assertThat(actual).isEqualTo(Base().apply {
             title = "title"

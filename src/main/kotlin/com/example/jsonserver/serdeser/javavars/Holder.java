@@ -1,28 +1,13 @@
-package com.example.jsonserver.api.javavals;
+package com.example.jsonserver.serdeser.javavars;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import java.util.Objects;
 
 public class Holder {
-    public final String details;
+    public String details;
     @JsonUnwrapped
-    public final Base base;
-
-    @JsonCreator
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public Holder(@JsonProperty("details") String details) {
-        this.details = details;
-        this.base = null;
-    }
-
-    public Holder(String details, Base base) {
-        this.details = details;
-        this.base = base;
-    }
+    public Base base;
 
     @Override
     public String toString() {

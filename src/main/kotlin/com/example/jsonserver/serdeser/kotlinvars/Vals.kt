@@ -1,4 +1,4 @@
-package com.example.jsonserver.api.kotlinvars
+package com.example.jsonserver.serdeser.kotlinvars
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped
 

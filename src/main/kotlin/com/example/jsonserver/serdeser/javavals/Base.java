@@ -1,10 +1,19 @@
-package com.example.jsonserver.api.javavars;
+package com.example.jsonserver.serdeser.javavals;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
 public class Base {
-    public String title;
-    public String description;
+    public final String title;
+    public final String description;
+
+    @JsonCreator
+    public Base(@JsonProperty("title") String title, @JsonProperty("description") String description) {
+        this.title = title;
+        this.description = description;
+    }
 
     @Override
     public String toString() {

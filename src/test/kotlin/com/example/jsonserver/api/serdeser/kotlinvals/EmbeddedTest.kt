@@ -1,5 +1,7 @@
-package com.example.jsonserver.api.kotlinvals
+package com.example.jsonserver.api.serdeser.kotlinvals
 
+import com.example.jsonserver.serdeser.kotlinvals.Base
+import com.example.jsonserver.serdeser.kotlinvals.Holder
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Disabled
@@ -20,12 +22,14 @@ class EmbeddedTest {
 
     @Test
     fun `should deserialize base`() {
-        val actual:Base = objectMapper.readValue("""{"title":"title","description":"desc"}""", Base::class.java)
+        val actual: Base = objectMapper.readValue("""{"title":"title","description":"desc"}""", Base::class.java)
 
-        assertThat(actual).isEqualTo(Base(
+        assertThat(actual).isEqualTo(
+            Base(
             title = "title",
             description = "desc",
-        ))
+        )
+        )
     }
 
     @Test

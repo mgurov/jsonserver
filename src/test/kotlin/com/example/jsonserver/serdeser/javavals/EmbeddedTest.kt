@@ -1,19 +1,15 @@
-package com.example.jsonserver.api.serdeser.kotlinvals
+package com.example.jsonserver.serdeser.javavals
 
-import com.example.jsonserver.serdeser.kotlinvals.Base
-import com.example.jsonserver.serdeser.kotlinvals.Holder
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.example.jsonserver.serdeser.javavals.Base
+import com.example.jsonserver.serdeser.javavals.Holder
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class EmbeddedTest {
     @Test
     fun `should serialize base`() {
-        val base = Base(
-            title = "title",
-            description = "desc",
-        )
+        val base = Base("title", "desc")
 
         val actual = objectMapper.writeValueAsString(base)
 
@@ -24,23 +20,14 @@ class EmbeddedTest {
     fun `should deserialize base`() {
         val actual: Base = objectMapper.readValue("""{"title":"title","description":"desc"}""", Base::class.java)
 
-        assertThat(actual).isEqualTo(
-            Base(
-            title = "title",
-            description = "desc",
-        )
-        )
+        assertThat(actual).isEqualTo(Base("title", "desc"))
     }
 
     @Test
-    @Disabled //TODO: write down the issues
     fun `should serialize holder`() {
         val value = Holder(
-            base = Base(
-                title = "title",
-                description = "desc",
-            ),
-            details = "gory",
+            "gory",
+            Base("title", "desc")
         )
 
         val actual = objectMapper.writeValueAsString(value)
@@ -54,15 +41,12 @@ class EmbeddedTest {
         val actual = objectMapper.readValue("""{"details":"gory","title":"title","description":"desc"}""", Holder::class.java)
 
         val expected = Holder(
-            base = Base(
-                title = "title",
-                description = "desc",
-            ),
-            details = "gory",
+            "gory",
+            Base("title", "desc")
         )
 
         assertThat(actual).isEqualTo(expected)
     }
 
-    private val objectMapper = jacksonObjectMapper()
+    private val objectMapper = ObjectMapper()
 }

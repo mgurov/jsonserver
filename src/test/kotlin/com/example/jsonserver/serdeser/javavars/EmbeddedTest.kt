@@ -1,7 +1,7 @@
-package com.example.jsonserver.api.serdeser.javavals
+package com.example.jsonserver.serdeser.javavars
 
-import com.example.jsonserver.serdeser.javavals.Base
-import com.example.jsonserver.serdeser.javavals.Holder
+import com.example.jsonserver.serdeser.javavars.Base
+import com.example.jsonserver.serdeser.javavars.Holder
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Test
 class EmbeddedTest {
     @Test
     fun `should serialize base`() {
-        val base = Base("title", "desc")
+        val base = Base().apply {
+            title = "title"
+            description = "desc"
+        }
 
         val actual = objectMapper.writeValueAsString(base)
 
@@ -20,15 +23,21 @@ class EmbeddedTest {
     fun `should deserialize base`() {
         val actual: Base = objectMapper.readValue("""{"title":"title","description":"desc"}""", Base::class.java)
 
-        assertThat(actual).isEqualTo(Base("title", "desc"))
+        assertThat(actual).isEqualTo(Base().apply {
+            title = "title"
+            description = "desc"
+        })
     }
 
     @Test
     fun `should serialize holder`() {
-        val value = Holder(
-            "gory",
-            Base("title", "desc")
-        )
+        val value = Holder().apply {
+            base = Base().apply {
+                title = "title"
+                description = "desc"
+            }
+            details = "gory"
+        }
 
         val actual = objectMapper.writeValueAsString(value)
 
@@ -40,10 +49,13 @@ class EmbeddedTest {
 
         val actual = objectMapper.readValue("""{"details":"gory","title":"title","description":"desc"}""", Holder::class.java)
 
-        val expected = Holder(
-            "gory",
-            Base("title", "desc")
-        )
+        val expected = Holder().apply {
+            base = Base().apply {
+                title = "title"
+                description = "desc"
+            }
+            details = "gory"
+        }
 
         assertThat(actual).isEqualTo(expected)
     }

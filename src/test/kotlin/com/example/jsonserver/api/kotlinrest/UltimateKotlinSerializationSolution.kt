@@ -1,5 +1,6 @@
 package com.example.jsonserver.api.kotlinrest
 
+import com.example.jsonserver.assertIsJson
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -34,6 +35,7 @@ class UltimateKotlinSerializationSolution {
         )
 
         val actual = objectMapper.writeValueAsString(given)
+
         //language=JSON
         actual.assertIsJson(
             """
@@ -163,14 +165,6 @@ class UltimateKotlinSerializationSolution {
         assertThat(actual).isEqualTo(
             given.updateableProps
         )
-    }
-
-    fun String.assertIsJson(
-        expected: String
-    ) {
-        val actualJson: JsonNode = objectMapper.readTree(this)
-        val expectedJson: JsonNode = objectMapper.readTree(expected)
-        assertThat(actualJson).isEqualTo(expectedJson)
     }
 
     private val objectMapper = jacksonObjectMapper()

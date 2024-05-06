@@ -19,6 +19,8 @@ class DataAPI {
         nextPage: String?,
         @RequestParam(required = false, defaultValue = "10")
         delay: Long,
+        @RequestParam(required = false, defaultValue = "false")
+        fail: Boolean,
     ) : Response {
 
         val data: List<String> = (1..size).map { it.toString() }
@@ -33,6 +35,10 @@ class DataAPI {
         }
 
         TimeUnit.SECONDS.sleep(delay)
+
+        if (fail) {
+            throw RuntimeException("Duly failing as per request.")
+        }
 
         return Response(dataPage, nextPage = nextNextPage, pageSize = pageSize)
 

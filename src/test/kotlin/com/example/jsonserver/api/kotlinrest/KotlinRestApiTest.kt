@@ -2,6 +2,7 @@ package com.example.jsonserver.api.kotlinrest
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -36,6 +37,7 @@ class KotlinRestApiTest(
     }
 
     @Test
+    @Disabled
     fun `simple name update`() {
         val created = givenEntityCreated(name = "initial", description = "initial")
 

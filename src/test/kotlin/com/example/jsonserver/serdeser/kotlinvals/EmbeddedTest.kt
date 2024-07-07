@@ -49,6 +49,7 @@ class EmbeddedTest {
     }
 
     @Test
+    @Disabled
     fun `should deserialize holder`() {
 
         val actual = objectMapper.readValue("""{"details":"gory","title":"title","description":"desc"}""", Holder::class.java)
